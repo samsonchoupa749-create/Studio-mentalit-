@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173b35">
+<meta name="description" content="STUDIO MENTALITÉ — projets, documents, tâches et ateliers créatifs.">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<title>STUDIO MENTALITÉ</title>
+<style>
+:root{--ink:#172d2a;--green:#20584c;--gold:#d6ad62;--paper:#f5f5f0;--card:#fff;--muted:#65736d;--line:#dfe5df;--red:#a33c36;--blue:#eaf1f8}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--ink);color:#fff;padding:16px max(16px,calc((100vw - 900px)/2));position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
+.brand{display:flex;align-items:center;gap:12px}.mark{width:44px;height:44px;flex-shrink:0;border:1px solid var(--gold);border-radius:13px;display:grid;place-items:center;color:var(--gold);font-size:21px;font-weight:900}
+h1{font-size:18px;margin:0;letter-spacing:.04em}header p{font-size:12px;color:#d1ded8;margin:2px 0 0}
+main{max-width:940px;margin:auto;padding:14px 13px 88px}.topline{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:10px 0 13px}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:3px 0 14px;scrollbar-width:thin}.tab{white-space:nowrap;background:#e5e9e3;color:var(--ink);border:0;border-radius:10px;padding:10px 12px;font:inherit;font-weight:700}
+.tab.active{background:var(--green);color:white}
+.panel{display:none}.panel.active{display:block}
+h2{font-size:21px;line-height:1.2;margin:0}h3{font-size:16px;margin:0 0 10px}
+.muted{color:var(--muted);font-size:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:14px;margin:10px 0;box-shadow:0 2px 8px #172d2a08}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px}.stat strong{display:block;font-size:24px}.stat span{font-size:12px;color:var(--muted)}
+label{display:block;font-size:13px;font-weight:750;margin:10px 0 5px}input,select,textarea{width:100%;border:1px solid #cbd5cd;background:#fff;color:var(--ink);border-radius:10px;padding:11px;font:inherit;min-width:0}textarea{min-height:105px;resize:vertical}
+button{border:0;border-radius:10px;padding:10px 12px;font:inherit;font-weight:700;cursor:pointer}.primary{background:var(--green);color:white}.secondary{background:#e6ebe5;color:var(--ink)}.danger{background:#fae9e7;color:var(--red)}.gold{background:#f6ecd7;color:#614717}.small{font-size:12px;padding:7px 9px}.actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:11px}
+.pill{display:inline-block;border-radius:999px;background:#edf2ed;padding:3px 8px;font-size:11px;margin:5px 4px 0 0}.item-title{font-weight:800;overflow-wrap:anywhere}.empty{text-align:center;padding:18px 8px;color:var(--muted);font-size:13px}
+.notice{border:1px solid #e8d5a6;background:#fff7e3;border-radius:12px;padding:11px 12px;font-size:12px;margin:9px 0 13px}.good{background:#eaf4ed;border-color:#cfe2d3}
+.task-row{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-bottom:1px solid var(--line)}.task-row:last-child{border-bottom:0}.task-row input[type=checkbox]{width:19px;height:19px;flex-shrink:0;margin-top:3px}.task-body{flex:1;min-width:0;overflow-wrap:anywhere}.done{text-decoration:line-through;color:var(--muted)}
+.workshop-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.workshop{border:1px solid var(--line);background:white;border-radius:14px;padding:13px;text-align:left;color:var(--ink);min-height:100px}.workshop .emoji{font-size:24px;display:block;margin-bottom:6px}.workshop strong{display:block}.workshop small{display:block;color:var(--muted);font-weight:400;margin-top:3px}
+.prompt{white-space:pre-wrap;background:#f7f8f5;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:13px;overflow-wrap:anywhere}
+footer{text-align:center;padding:20px 0;color:var(--muted);font-size:11px}
+.hidden{display:none!important}
+@media(min-width:650px){main{padding:22px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.workshop-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.card{padding:17px}}
+</style>
+</head>
+<body>
+<header><div class="brand"><div class="mark">M</div><div><h1>STUDIO MENTALITÉ</h1><p>Créer avec méthode. Organiser avec clarté.</p></div></div></header>
+<main>
+  <div class="notice" id="connectionNotice"><strong>Version 1.0 · Première édition.</strong> Les projets sont enregistrés sur cet appareil dans ce navigateur. Exporte régulièrement une sauvegarde et conserve-la séparément.</div>
+  <div class="topline"><div><div id="todayLabel" class="muted"></div><div style="font-weight:800">Ton espace de création</div></div><button class="primary" id="quickAdd">+ Créer</button></div>
+  <nav class="tabs" aria-label="Navigation principale">
+    <button class="tab active" data-tab="home">Accueil</button><button class="tab" data-tab="workshops">Ateliers</button><button class="tab" data-tab="projects">Projets</button><button class="tab" data-tab="tasks">Tâches</button><button class="tab" data-tab="docs">Documents</button><button class="tab" data-tab="tools">Outils IA</button><button class="tab" data-tab="backup">Sauvegarde</button>
+  </nav>
+  <section class="panel active" id="home">
+    <div class="grid">
+      <div class="stat"><strong id="statProjects">0</strong><span>Projets actifs</span></div><div class="stat"><strong id="statTodo">0</strong><span>Tâches à faire</span></div><div class="stat"><strong id="statDocs">0</strong><span>Documents</span></div><div class="stat"><strong id="statDone">0</strong><span>Tâches terminées</span></div>
+    </div>
+    <div class="card"><div class="topline"><h3>Mes projets récents</h3><button class="secondary small" data-goto="projects">Tout voir</button></div><div id="homeProjects"></div></div>
+    <div class="card"><div class="topline"><h3>Mes prochaines tâches</h3><button class="secondary small" data-goto="tasks">Tout voir</button></div><div id="homeTasks"></div></div>
+    <div class="card"><h3>Une méthode simple</h3><p class="muted">1. Clarifie le résultat. 2. Découpe le travail. 3. Produis. 4. Vérifie. 5. Sauvegarde.</p></div>
+  </section>
+
+  <section class="panel" id="workshops">
+    <h2>Les six ateliers</h2><p class="muted">Choisis un espace pour préparer un projet ou obtenir une consigne de travail réutilisable dans ton assistant IA habituel.</p>
+    <div class="workshop-grid" id="workshopGrid"></div>
+    <div class="card" id="workshopDetail"><h3>Mode d'emploi</h3><p class="muted">Chaque atelier dispose d'une méthode de travail. L'application n'envoie pas automatiquement tes données à un service d'IA.</p></div>
+  </section>
+
+  <section class="panel" id="projects">
+    <h2>Mes projets</h2><p class="muted">Livres, films, patrimoine, dessin, candidatures et communication.</p>
+    <div class="card"><h3 id="projectFormTitle">Créer un projet</h3><form id="projectForm"><input type="hidden" id="projectId">
+      <label for="projectName">Nom du projet *</label><input id="projectName" maxlength="140" required placeholder="Ex. Les Racines TCHOUKPA">
+      <label for="projectType">Atelier</label><select id="projectType"><option>Littérature</option><option>Cinéma</option><option>Patrimoine</option><option>Dessin et animation</option><option>Carrière et opportunités</option><option>Communication</option><option>Autre</option></select>
+      <label for="projectStatus">État</label><select id="projectStatus"><option>À préparer</option><option>En cours</option><option>En attente</option><option>Terminé</option></select>
+      <label for="projectGoal">Objectif / prochaine étape</label><textarea id="projectGoal" placeholder="Quel résultat concret veux-tu obtenir ?"></textarea>
+      <div class="actions"><button class="primary" type="submit">Enregistrer</button><button class="secondary" type="button" id="cancelProject">Réinitialiser</button></div>
+    </form></div><div id="projectList"></div>
+  </section>
+
+  <section class="panel" id="tasks">
+    <h2>Mes tâches</h2><p class="muted">Découpe chaque projet en actions simples et vérifiables.</p>
+    <div class="card"><h3>Ajouter une tâche</h3><form id="taskForm">
+      <label for="taskTitle">Tâche *</label><input id="taskTitle" maxlength="200" required placeholder="Ex. Finaliser la note d'intention">
+      <label for="taskProject">Projet associé</label><select id="taskProject"><option value="">Aucun projet</option></select>
+      <label for="taskDue">Échéance (facultative)</label><input id="taskDue" type="date">
+      <div class="actions"><button class="primary" type="submit">Ajouter la tâche</button></div>
+    </form></div>
+    <div class="card"><h3>À faire</h3><div id="todoList"></div></div><div class="card"><h3>Terminées</h3><div id="doneList"></div></div>
+  </section>
+
+  <section class="panel" id="docs">
+    <h2>Mes documents</h2><p class="muted">Notes de travail, idées, scènes, résumés et éléments de dossier.</p>
+    <div class="card"><h3 id="docFormTitle">Créer un document</h3><form id="docForm"><input type="hidden" id="docId">
+      <label for="docTitle">Titre *</label><input id="docTitle" maxlength="180" required placeholder="Ex. Note d'intention">
+      <label for="docProject">Projet associé</label><select id="docProject"><option value="">Aucun projet</option></select>
+      <label for="docCategory">Type de document</label><select id="docCategory"><option>Note</option><option>Scénario</option><option>Dossier artistique</option><option>Candidature</option><option>Publication</option><option>Recherche / source</option><option>Autre</option></select>
+      <label for="docContent">Contenu</label><textarea id="docContent" style="min-height:170px" placeholder="Écris ici. Enregistre avant de quitter la page."></textarea>
+      <div class="actions"><button class="primary" type="submit">Enregistrer le document</button><button class="secondary" type="button" id="cancelDoc">Réinitialiser</button></div>
+    </form></div><div id="docList"></div>
+  </section>
+
+  <section class="panel" id="tools">
+    <h2>Outils de travail avec l'IA</h2><p class="muted">Ces modèles de consignes sont utilisables avec un assistant IA de ton choix. Cette version ne contient pas encore de connexion IA automatique.</p>
+    <div class="card"><label for="promptType">Choisir une méthode</label><select id="promptType">
+      <option value="analyse">Analyser et améliorer une idée</option><option value="manuscrit">Réviser un texte littéraire</option><option value="cinema">Développer un projet de film</option><option value="patrimoine">Documenter un sujet de patrimoine</option><option value="candidature">Préparer une candidature</option><option value="reseaux">Préparer une publication</option><option value="dessin">Préparer un exercice de dessin</option>
+    </select><label for="promptContext">Décris ton besoin (facultatif)</label><textarea id="promptContext" placeholder="Ex. Je prépare un dossier de court métrage sur la transmission familiale…"></textarea><div class="actions"><button class="primary" id="makePrompt">Préparer la consigne</button><button class="secondary" id="copyPrompt">Copier la consigne</button></div><div class="prompt" id="promptOutput">Ta consigne personnalisée apparaîtra ici.</div></div>
+    <div class="notice">Vérifie les faits, les dates, les règles d'un concours et les sources avant d'utiliser un résultat professionnel. Ne partage pas de données personnelles sensibles dans un service externe.</div>
+  </section>
+
+  <section class="panel" id="backup">
+    <h2>Sauvegarde et réglages</h2>
+    <div class="card"><h3>Exporter mes données</h3><p class="muted">Télécharge une copie JSON de tous tes projets, tâches et documents.</p><button class="primary" id="exportBtn">Exporter la sauvegarde</button></div>
+    <div class="card"><h3>Importer une sauvegarde</h3><p class="muted">L'import remplace les données présentes. Exporte d'abord l'état actuel.</p><label for="importFile">Choisir le fichier JSON</label><input type="file" id="importFile" accept=".json,application/json"><div class="actions"><button class="danger" id="importBtn">Importer et remplacer</button></div></div>
+    <div class="card"><h3>Vérifier l'application</h3><p id="appStatus" class="muted">Vérification…</p><p id="storageStatus" class="muted"></p><button class="secondary" id="installBtn" hidden>Installer STUDIO MENTALITÉ</button><p class="muted">Le bouton d'installation n'apparaît que lorsque le navigateur et l'adresse de publication répondent aux conditions requises. Sinon, utilise le menu du navigateur → Ajouter à l'écran d'accueil.</p></div>
+    <div class="card"><h3>Effacer les données locales</h3><p class="muted">Cette action supprime les projets, tâches et documents de ce navigateur.</p><button class="danger" id="clearBtn">Effacer toutes les données</button></div>
+  </section>
+  <footer>STUDIO MENTALITÉ · Version 1.0 · Les idées méritent une méthode et une sauvegarde.</footer>
+</main>
+<script>
+(function(){
+'use strict';
+const KEY='studioMentaliteDataV1';
+const $=id=>document.getElementById(id);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const emptyData=()=>({projects:[],tasks:[],docs:[]});
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&Array.isArray(x.projects)&&Array.isArray(x.tasks)&&Array.isArray(x.docs))return x;}catch(e){}return emptyData();}
+let data=load(), deferredInstall=null;
+const workshops=[
+{type:'Littérature',emoji:'✍🏽',title:'Littérature et pensée',desc:'Manuscrits, style, structure et publication.',prompt:'Agis comme un éditeur littéraire exigeant. Respecte la voix et l’intention de l’auteur. Distingue les corrections nécessaires des suggestions stylistiques. N’invente pas d’informations et explique brièvement les changements importants.'},
+{type:'Cinéma',emoji:'🎬',title:'Cinéma et scénarisation',desc:'Scénario, séquencier, personnages et dossier.',prompt:'Agis comme un consultant en scénario et développement de film. Examine l’intention, les personnages, la structure, les scènes, la faisabilité et la cohérence. Respecte la vision de l’auteur et signale clairement les questions non résolues.'},
+{type:'Patrimoine',emoji:'🏺',title:'Patrimoine et mémoire',desc:'Témoignages, traditions et transmission.',prompt:'Agis comme un assistant de recherche en patrimoine culturel. Sépare faits documentés, témoignages, hypothèses et fiction. N’invente jamais une tradition ni une source. Indique ce qui doit être vérifié auprès de sources fiables et de détenteurs de savoirs.'},
+{type:'Dessin et animation',emoji:'✏️',title:'Dessin et animation',desc:'Exercices progressifs, personnages et storyboard.',prompt:'Agis comme un professeur de dessin et d’animation pour débutant travaillant sur téléphone avec des outils gratuits. Donne un exercice progressif, réalisable, détaillé étape par étape, puis des critères simples pour évaluer le résultat.'},
+{type:'Carrière et opportunités',emoji:'📂',title:'Carrière et opportunités',desc:'CV, candidatures, dossiers et budgets.',prompt:'Agis comme un conseiller professionnel rigoureux. N’invente aucun diplôme, prix, expérience ou partenariat. Adapte le dossier aux critères fournis, distingue les informations confirmées des éléments à compléter et livre un texte clair, crédible et prêt à relire.'},
+{type:'Communication',emoji:'📣',title:'Communication et revenus créatifs',desc:'Publications, scripts courts et offres.',prompt:'Agis comme un stratège éditorial. Propose un contenu adapté au public et à la plateforme, avec une intention claire et un appel à l’action pertinent. Évite les promesses non vérifiées, le sensationnalisme et les formules génériques.'}
+];
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data));render();}catch(e){alert('Le navigateur ne peut pas enregistrer ces données. Exporte une sauvegarde et libère de l’espace.');}}
+function projectName(id){return data.projects.find(p=>p.id===id)?.name||'';}
+function dateLabel(s){if(!s)return '';try{return new Date(s+'T12:00:00').toLocaleDateString('fr-FR');}catch(e){return s;}}
+function options(selected=''){return '<option value="">Aucun projet</option>'+data.projects.map(p=>`<option value="${esc(p.id)}" ${p.id===selected?'selected':''}>${esc(p.name)}</option>`).join('');}
+function tab(name){document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===name));}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>tab(b.dataset.goto)));
+$('quickAdd').onclick=()=>{tab('projects');$('projectName').focus();};
+$('todayLabel').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+$('workshopGrid').innerHTML=workshops.map((w,i)=>`<button class="workshop" data-workshop="${i}"><span class="emoji">${w.emoji}</span><strong>${w.title}</strong><small>${w.desc}</small></button>`).join('');
+$('workshopGrid').addEventListener('click',e=>{const b=e.target.closest('[data-workshop]');if(!b)return;const w=workshops[Number(b.dataset.workshop)];$('workshopDetail').innerHTML=`<h3>${w.emoji} ${esc(w.title)}</h3><p class="muted">${esc(w.desc)}</p><div class="prompt" id="workshopPrompt">${esc(w.prompt)}</div><div class="actions"><button class="primary" id="copyWorkshop">Copier la consigne</button><button class="secondary" id="newWorkshopProject">Créer un projet dans cet atelier</button></div>`;$('copyWorkshop').onclick=()=>copyText(w.prompt);$('newWorkshopProject').onclick=()=>{tab('projects');$('projectType').value=w.type;$('projectName').focus();};});
+function projectCard(p){const n=data.tasks.filter(t=>t.projectId===p.id&&!t.done).length,d=data.docs.filter(x=>x.projectId===p.id).length;return `<div class="card"><div class="item-title">${esc(p.name)}</div><span class="pill">${esc(p.type)}</span><span class="pill">${esc(p.status)}</span><p class="muted">${esc(p.goal||'Aucun objectif renseigné.')}</p><p class="muted">${n} tâche(s) à faire · ${d} document(s)</p><div class="actions"><button class="secondary small" data-edit-project="${p.id}">Modifier</button><button class="danger small" data-delete-project="${p.id}">Supprimer</button></div></div>`;}
+function taskRow(t){return `<div class="task-row"><input type="checkbox" aria-label="Marquer comme terminée" data-toggle-task="${t.id}" ${t.done?'checked':''}><div class="task-body"><div class="${t.done?'done':''}">${esc(t.title)}</div><div class="muted">${esc(projectName(t.projectId)||'Sans projet')}${t.due?' · Échéance : '+esc(dateLabel(t.due)):''}</div><button class="danger small" data-delete-task="${t.id}" style="margin-top:6px">Supprimer</button></div></div>`;}
+function docCard(d){return `<div class="card"><div class="item-title">${esc(d.title)}</div><span class="pill">${esc(d.category||'Note')}</span><div class="muted">${esc(projectName(d.projectId)||'Sans projet')} · Modifié : ${esc(dateLabel((d.updated||'').slice(0,10)))}</div><p style="white-space:pre-wrap;overflow-wrap:anywhere">${esc((d.content||'').slice(0,240))}${(d.content||'').length>240?'…':''}</p><div class="actions"><button class="secondary small" data-edit-doc="${d.id}">Ouvrir / modifier</button><button class="danger small" data-delete-doc="${d.id}">Supprimer</button></div></div>`;}
+function empty(msg){return `<div class="empty">${msg}</div>`;}
+function render(){
+$('statProjects').textContent=data.projects.filter(p=>p.status!=='Terminé').length;
+$('statTodo').textContent=data.tasks.filter(t=>!t.done).length;
+$('statDocs').textContent=data.docs.length;
+$('statDone').textContent=data.tasks.filter(t=>t.done).length;
+$('homeProjects').innerHTML=data.projects.length?data.projects.slice().reverse().slice(0,3).map(projectCard).join(''):empty('Aucun projet. Crée ton premier projet.');
+const pending=data.tasks.filter(t=>!t.done).sort((a,b)=>(a.due||'9999').localeCompare(b.due||'9999'));
+$('homeTasks').innerHTML=pending.length?pending.slice(0,5).map(taskRow).join(''):empty('Aucune tâche en attente.');
+$('projectList').innerHTML=data.projects.length?data.projects.slice().reverse().map(projectCard).join(''):empty('Tes projets apparaîtront ici.');
+$('taskProject').innerHTML=options($('taskProject').value);
+$('docProject').innerHTML=options($('docProject').value);
+$('todoList').innerHTML=pending.length?pending.map(taskRow).join(''):empty('Rien à faire pour le moment.');
+const done=data.tasks.filter(t=>t.done);
+$('doneList').innerHTML=done.length?done.map(taskRow).join(''):empty('Les tâches terminées apparaîtront ici.');
+$('docList').innerHTML=data.docs.length?data.docs.slice().reverse().map(docCard).join(''):empty('Aucun document enregistré.');
+$('appStatus').textContent=`Application prête · ${data.projects.length} projet(s), ${data.tasks.length} tâche(s), ${data.docs.length} document(s).`;
+$('storageStatus').textContent=`Mode : ${location.protocol==='https:'?'connexion HTTPS':'fichier local ou contexte non HTTPS'} · Service worker : ${'serviceWorker' in navigator?'pris en charge par le navigateur':'non pris en charge'}.`;
+}
+function resetProject(){$('projectForm').reset();$('projectId').value='';$('projectFormTitle').textContent='Créer un projet';}
+$('cancelProject').onclick=resetProject;
+$('projectForm').onsubmit=e=>{e.preventDefault();const id=$('projectId').value||uid(),old=data.projects.find(p=>p.id===id);const p={id,name:$('projectName').value.trim(),type:$('projectType').value,status:$('projectStatus').value,goal:$('projectGoal').value.trim(),created:old?.created||new Date().toISOString(),updated:new Date().toISOString()};if(old)data.projects=data.projects.map(x=>x.id===id?p:x);else data.projects.push(p);save();resetProject();};
+$('taskForm').onsubmit=e=>{e.preventDefault();data.tasks.push({id:uid(),title:$('taskTitle').value.trim(),projectId:$('taskProject').value,due:$('taskDue').value,done:false,created:new Date().toISOString()});save();$('taskForm').reset();};
+function resetDoc(){$('docForm').reset();$('docId').value='';$('docFormTitle').textContent='Créer un document';}
+$('cancelDoc').onclick=resetDoc;
+$('docForm').onsubmit=e=>{e.preventDefault();const id=$('docId').value||uid(),old=data.docs.find(d=>d.id===id);const d={id,title:$('docTitle').value.trim(),projectId:$('docProject').value,category:$('docCategory').value,content:$('docContent').value,created:old?.created||new Date().toISOString(),updated:new Date().toISOString()};if(old)data.docs=data.docs.map(x=>x.id===id?d:x);else data.docs.push(d);save();resetDoc();};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+if(b.dataset.editProject){const p=data.projects.find(x=>x.id===b.dataset.editProject);if(!p)return;tab('projects');$('projectId').value=p.id;$('projectName').value=p.name;$('projectType').value=p.type;$('projectStatus').value=p.status;$('projectGoal').value=p.goal;$('projectFormTitle').textContent='Modifier le projet';window.scrollTo(0,0);}
+if(b.dataset.deleteProject){const p=data.projects.find(x=>x.id===b.dataset.deleteProject);if(p&&confirm(`Supprimer le projet « ${p.name} » ? Les tâches et documents seront conservés sans projet.`)){data.tasks.forEach(t=>{if(t.projectId===p.id)t.projectId='';});data.docs.forEach(d=>{if(d.projectId===p.id)d.projectId='';});data.projects=data.projects.filter(x=>x.id!==p.id);save();}}
+if(b.dataset.deleteTask&&confirm('Supprimer cette tâche ?')){data.tasks=data.tasks.filter(t=>t.id!==b.dataset.deleteTask);save();}
+if(b.dataset.editDoc){const d=data.docs.find(x=>x.id===b.dataset.editDoc);if(!d)return;tab('docs');$('docId').value=d.id;$('docTitle').value=d.title;$('docProject').value=d.projectId||'';$('docCategory').value=d.category||'Note';$('docContent').value=d.content; $('docFormTitle').textContent='Modifier le document';window.scrollTo(0,0);}
+if(b.dataset.deleteDoc&&confirm('Supprimer ce document ?')){data.docs=data.docs.filter(d=>d.id!==b.dataset.deleteDoc);save();}
+});
+document.addEventListener('change',e=>{const id=e.target.dataset.toggleTask;if(id){const t=data.tasks.find(t=>t.id===id);if(t){t.done=e.target.checked;save();}}});
+function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+$('exportBtn').onclick=()=>downloadBlob(new Blob([JSON.stringify({app:'STUDIO MENTALITÉ',version:1,exportedAt:new Date().toISOString(),data},null,2)],{type:'application/json'}),'studio-mentalite-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json');
+$('importBtn').onclick=()=>{const f=$('importFile').files[0];if(!f){alert('Choisis d’abord un fichier JSON.');return;}if(!confirm('L’import remplace toutes les données actuelles. As-tu sauvegardé l’état actuel ?'))return;const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result),d=x.data||x;if(!Array.isArray(d.projects)||!Array.isArray(d.tasks)||!Array.isArray(d.docs))throw Error('format');data={projects:d.projects,tasks:d.tasks,docs:d.docs};save();alert('Sauvegarde importée.');}catch(e){alert('Fichier incompatible. Aucune importation effectuée.');}};r.readAsText(f);};
+$('clearBtn').onclick=()=>{if(confirm('Effacer tous les projets, tâches et documents de ce navigateur ?')&&confirm('Dernière confirmation : as-tu une sauvegarde exportée ?')){data=emptyData();save();}};
+const promptTemplates={
+analyse:'Agis comme un conseiller analytique rigoureux. Clarifie l’objectif, identifie les hypothèses, les risques, les informations manquantes et propose un plan d’action concret. N’invente pas de faits.',
+manuscrit:'Agis comme un éditeur littéraire exigeant. Préserve la voix de l’auteur. Corrige les fautes et améliore la clarté sans dénaturer le sens. Sépare les corrections indispensables des suggestions stylistiques.',
+cinema:'Agis comme un consultant en scénario. Analyse le concept, l’intention, les personnages, la structure, les scènes et la faisabilité. Signale les incohérences et propose des solutions sans imposer une vision unique.',
+patrimoine:'Agis comme un assistant de recherche en patrimoine. Sépare faits documentés, témoignages, hypothèses et fiction. N’invente aucune source, date ni tradition. Liste les points à vérifier et les sources pertinentes à rechercher.',
+candidature:'Agis comme un conseiller en candidatures culturelles. Respecte strictement mon parcours réel. N’invente aucun diplôme, prix ou expérience. Adapte le dossier aux critères fournis et signale les pièces manquantes.',
+reseaux:'Agis comme un stratège éditorial. Prépare une publication claire, originale et adaptée au public indiqué. Évite les clichés et les affirmations non vérifiées. Fournis une accroche, un contenu et un appel à l’action naturel.',
+dessin:'Agis comme un formateur en dessin et animation pour débutant sur Android avec outils gratuits. Propose un exercice réalisable étape par étape, une durée, les erreurs à surveiller et des critères simples d’autoévaluation.'
+};
+function makePrompt(){const t=$('promptType').value,context=$('promptContext').value.trim();return promptTemplates[t]+'\n\nContexte ou demande : '+(context||'[À compléter]')+'\n\nMéthode attendue : pose une question seulement si une information essentielle manque ; propose une réponse structurée, réaliste et directement exploitable ; indique les éléments à vérifier.';}
+$('makePrompt').onclick=()=>{$('promptOutput').textContent=makePrompt();};
+async function copyText(t){try{if(navigator.clipboard&&window.isSecureContext){await navigator.clipboard.writeText(t);}else{const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();}alert('Texte copié.');}catch(e){alert('La copie automatique n’a pas fonctionné. Sélectionne le texte et copie-le manuellement.');}}
+$('copyPrompt').onclick=()=>copyText($('promptOutput').textContent==='Ta consigne personnalisée apparaîtra ici.'?makePrompt():$('promptOutput').textContent);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredInstall=e;$('installBtn').hidden=false;});
+$('installBtn').onclick=async()=>{if(!deferredInstall){alert('Si ce bouton reste indisponible, ouvre le menu ⋮ de Chrome puis « Ajouter à l’écran d’accueil ».');return;}deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;$('installBtn').hidden=true;};
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if(location.protocol!=='https:' && location.hostname!=='localhost')$('connectionNotice').innerHTML='<strong>Mode aperçu local.</strong> Pour installer et utiliser le mode hors ligne, publie les fichiers sur une adresse HTTPS. Tes données restent locales à ce navigateur.';
+render();
+})();
+</script>
+</body></html>
